@@ -8,11 +8,13 @@ Gem::Specification.new { |s|
   s.date        = '2013-06-20'
   s.summary     = 'OpenGL'
   s.description = 'OpenGL bindings for Ruby 2.x'
-  s.authors     = ['Noel Raymond Cower']
+  s.authors     = [ 'Noel Raymond Cower' ]
   s.email       = 'ncower@gmail.com'
-  s.files       = [
-    'lib/opengl.rb'
-  ]
+  s.files       = Dir.glob('lib/**/*.rb') +
+                  Dir.glob('ext/**/*.{c,rb}')
+  s.extensions << 'ext/opengl/extconf.rb'
   s.homepage    = 'https://github.com/nilium/ruby-opengl'
   s.license     = 'Simplified BSD'
+
+  s.add_development_dependency 'nokogiri'
 }

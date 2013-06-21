@@ -1,4 +1,5 @@
-
+require 'fiddle'
+require 'opengl/opengl_stub'
 
 module GlSym
 
@@ -7,11 +8,19 @@ module GlSym
   def self.load_gl_sym__(name)
     if @@opengl_lib.nil?
       lib_path = case
-      when macos? then nil
-      when unix? then nil
+      when apple?
+        '/System/Library/Frameworks/OpenGL.framework/OpenGL'
+      when unix? || linux?
+        'libGL.so.1'
+      when windows?
+        'opengl32.dll'
+      else
+        raise 'Unrecognized platform'
       end
-      puts lib_path
+      @@opengl_lib = Fiddle.dlopen(lib_path)
     end
+
+    @@opengl_lib[name]
   end
 
 end # module GlSym
