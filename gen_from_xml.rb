@@ -189,7 +189,7 @@ def generate_binding_impl(document)
     |io|
 
     io.puts <<-EOS
-module GlEnums
+module Gl
 EOS
 
     filtered_enums.select { |name, enum| enum.alias.nil? }.each {
@@ -213,7 +213,7 @@ EOS
       io.puts "  #{name.ljust(enum_name_length)} = #{enum.alias}"
     }
 
-    io.puts 'end # module GlEnums'
+    io.puts 'end # module Gl'
   }
 
   File.open("lib/opengl/#{prefix}_commands.rb", 'w') {
@@ -223,7 +223,7 @@ EOS
 require 'fiddle'
 require 'opengl/gl_sym'
 
-module GlCommands
+module Gl
 EOS
 
     filtered_commands.each {
@@ -237,18 +237,19 @@ EOS
       param_string = cmd.parameters.map { |p| "#{p.name}_" }.join(', ')
       io.puts <<-EOS
 
-  def #{name}(#{param_string})
+  def self.#{name}__(#{param_string})
     if @@#{name}.nil?
-      sym = load_gl_sym__('#{name}')
+      sym = GlSym.load_gl_sym__('#{name}')
       @@#{name} = Fiddle::Function.new(sym, [#{
-        cmd.parameters.map { |p| fiddle_type(p) }.join(', ') }], [#{ fiddle_type(cmd.type) }])
+        cmd.parameters.map { |p| fiddle_type(p) }.join(', ') }], #{ fiddle_type(cmd.type) })
     end
     @@#{name}.call(#{param_string})
   end
+  define_singleton_method(:'#{name}', method(:'#{name}__'))
 EOS
     }
 
-    io.puts 'end # module GlCommands'
+    io.puts 'end # module Gl'
   }
 end
 
