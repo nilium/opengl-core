@@ -6,7 +6,7 @@ Gem::Specification.new { |s|
   s.name        = 'opengl-core'
   s.version     = '0.0.1'
   s.date        = '2013-06-20'
-  s.summary     = 'OpenGL'
+  s.summary     = 'OpenGL core profile bindings'
   s.description = 'OpenGL core profile (3.2 onward, no deprecated functionality) bindings for Ruby 2.x. Generated from new XML spec files.'
   s.authors     = [ 'Noel Raymond Cower' ]
   s.email       = 'ncower@gmail.com'
