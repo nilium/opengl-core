@@ -1,5 +1,5 @@
 require 'fiddle'
-require 'opengl/opengl_stub'
+require 'opengl-core/opengl_stub'
 
 module GlSym
 
