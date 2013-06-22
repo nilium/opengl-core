@@ -1,4 +1,4 @@
-ruby-opengl
+opengl-core
 ===========
 
 OpenGL core profile and extension bindings for Ruby 2.x.
@@ -7,7 +7,21 @@ OpenGL core profile and extension bindings for Ruby 2.x.
 Installation
 ------------
 
-Installation is a tiny bit involved, mostly because you have to generate the
+### From RubyGems.org
+
+    $ gem install opengl-core
+
+And in your script:
+
+    require 'opengl-core'
+
+Job done, have fun. If you're a bad person and don't install your gems per
+user, you may need to throw a `sudo` in there.
+
+
+### From Source
+
+Installing from source is a bit involved just because you need to generate the
 OpenGL bindings before using them. To do this, simply clone the repository and
 navigate to its root directory in a terminal. Once there, run `gen_from_xml.rb`:
 
@@ -23,13 +37,13 @@ don't exist for a given context will result in errors, so keep that in mind.
 Once the functions have been generated, you can proceed to build and install
 the gem as per usual:
 
-    $ gem build opengl.gemspec
-    $ gem install opengl-0.0.1.gem
+    $ gem build opengl-core.gemspec
+    $ gem install opengl-core-1.0.0.gem
 
 Afterward, all GL enums and commands will be under the `Gl` module (note the
-lowercase L). Just `require 'opengl'` and you should be on your way. You do not
-have to statically link to the GL libraries, they will be loaded at runtime on
-first use.
+lowercase L). Just `require 'opengl-core'` and you should be on your way. You
+don't have to statically link to the GL libraries, they will be loaded at
+runtime on first use.
 
 
 Notes
@@ -40,13 +54,13 @@ first time you call `glClear`, the function will be loaded. This may change in
 the future, but it's worth being aware of it. Later down the road I'll probably
 add a function to load all possible GL symbols.
 
-Bear in mind, also, that the GL commands are currently all just providing mostly
-the same functionality they would in C or C++. This means that they do expect
-pointers and such. You can allocate these using `Fiddle::Pointer.malloc` and so
-on. _However_, in addition to this, each GL function is an alias of its raw
-function. So, in the module, you have both `glClear` and `glClear__`, the latter
-being the raw function and the former being a wrapper around it that can be
-overridden.
+Bear in mind, also, that the GL commands are currently all just providing more
+or less the same functionality they would in C or C++. This means that they do
+expect pointers and such. You can allocate these using `Fiddle::Pointer.malloc`
+and so on. _However_, in addition to this, each GL function is an alias of its
+raw function. So, in the module, you have both `glClear` and `glClear__`, the
+latter being the raw function and the former being a wrapper around it that
+can be overridden.
 
 I'd like to get some of these functions simplified down the road through an
 optional module that can be loaded to override the functions, so the plan is to
