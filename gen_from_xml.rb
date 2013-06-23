@@ -185,7 +185,7 @@ def generate_binding_impl(document)
   enum_name_length  = filtered_enums.map { |k, enum| enum.name.length }.max
   prefix            = document.url.chomp(File.extname(document.url))
 
-  File.open("lib/opengl/#{prefix}_enums.rb", 'w') {
+  File.open("lib/opengl-core/#{prefix}_enums.rb", 'w') {
     |io|
 
     io.puts <<-EOS
@@ -216,12 +216,12 @@ EOS
     io.puts 'end # module Gl'
   }
 
-  File.open("lib/opengl/#{prefix}_commands.rb", 'w') {
+  File.open("lib/opengl-core/#{prefix}_commands.rb", 'w') {
     |io|
 
     io.puts <<-EOS
 require 'fiddle'
-require 'opengl/gl_sym'
+require 'opengl-core/gl_sym'
 
 module Gl
 EOS
