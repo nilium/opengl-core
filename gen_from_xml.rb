@@ -89,7 +89,7 @@ SELECT_TYPE_XPATH     = 'ptype/text()|text()'
 
 def fiddle_type(param)
   if param.type.end_with? '*'
-    'Fiddle::VOIDP'
+    'Fiddle::TYPE_VOIDP'
   elsif TYPE_MAPPINGS.include?(param.core)
     TYPE_MAPPINGS[param.core]
   else
