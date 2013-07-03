@@ -14,10 +14,10 @@ module GlSym
       lib_path = case
       when apple?
         '/System/Library/Frameworks/OpenGL.framework/OpenGL'
+      when windows? || Fiddle::WINDOWS
+        'opengl32.dll'
       when unix? || linux?
         'libGL.so.1'
-      when windows?
-        'opengl32.dll'
       else
         raise 'Unrecognized platform'
       end
