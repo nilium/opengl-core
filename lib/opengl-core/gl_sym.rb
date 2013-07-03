@@ -1,10 +1,14 @@
 require 'fiddle'
 require 'opengl-core/opengl_stub'
 
+# @api private
 module GlSym
 
+  # OpenGL library handle.
   @@opengl_lib = nil
 
+  # Loads a symbol from the GL library. If the GL library hasn't yet been loaded
+  # it will also do that.
   def self.load_gl_sym__(name)
     if @@opengl_lib.nil?
       lib_path = case
