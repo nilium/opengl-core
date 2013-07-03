@@ -4,4 +4,5 @@ require 'opengl-core/gl_enums'
 require 'opengl-core/gl_commands'
 
 module Gl
+  extend self
 end
