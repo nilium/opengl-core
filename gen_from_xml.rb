@@ -194,7 +194,7 @@ EOS
 
     filtered_enums.select { |name, enum| enum.alias.nil? }.each {
       |name, enum|
-      io.puts "  #{name.ljust(enum_name_length)} = #{enum.value}"
+      io.puts "  # @api raw\n  #{name.ljust(enum_name_length)} = #{enum.value}"
     }
 
     filtered_enums.select { |name, enum| !enum.alias.nil? }.each {
@@ -210,7 +210,7 @@ EOS
       end
 
 
-      io.puts "  #{name.ljust(enum_name_length)} = #{enum.alias}"
+      io.puts "  # @api raw\n  #{name.ljust(enum_name_length)} = #{enum.alias}"
     }
 
     io.puts 'end # module Gl'
@@ -228,7 +228,7 @@ EOS
 
     filtered_commands.each {
       |name, cmd|
-      io.puts "  @@#{name} = nil"
+      io.puts "  # @api private\n  @@#{name}__fnptr__ = nil"
     }
 
     filtered_commands.each {
@@ -237,19 +237,20 @@ EOS
       param_string = cmd.parameters.map { |p| "#{p.name}_" }.join(', ')
       io.puts <<-EOS
 
-  def self.#{name}__(#{param_string})
-    if @@#{name}.nil?
+  # @api private
+  def #{name}__(#{param_string})
+    if @@#{name}__fnptr__.nil?
       sym = GlSym.load_gl_sym__('#{name}')
-      @@#{name} = Fiddle::Function.new(sym, [#{
+      @@#{name}__fnptr__ = Fiddle::Function.new(sym, [#{
         cmd.parameters.map { |p| fiddle_type(p) }.join(', ') }], #{ fiddle_type(cmd.type) })
     end
-    @@#{name}.call(#{param_string})
+    @@#{name}__fnptr__.call(#{param_string})
   end
-  define_singleton_method(:'#{name}', method(:'#{name}__'))
+  alias_method :'#{name}', :'#{name}__'
 EOS
     }
 
-    io.puts 'end # module Gl'
+    io.puts "end # module Gl"
   }
 end
 
