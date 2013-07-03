@@ -1,6 +1,7 @@
 #include "ruby.h"
 
 
+/* @api private */
 static VALUE plat_is_apple(VALUE self)
 {
   #if defined(__APPLE__)
@@ -11,6 +12,7 @@ static VALUE plat_is_apple(VALUE self)
 }
 
 
+/* @api private */
 static VALUE plat_is_windows(VALUE self)
 {
   #if defined(_WIN32) || defined(__MINGW32__) || defined(__CYGWIN__)
@@ -21,6 +23,7 @@ static VALUE plat_is_windows(VALUE self)
 }
 
 
+/* @api private */
 static VALUE plat_is_unix(VALUE self)
 {
   #if defined(__unix) || defined(__unix__) || defined(unix) || defined(__APPLE__)
@@ -31,6 +34,7 @@ static VALUE plat_is_unix(VALUE self)
 }
 
 
+/* @api private */
 static VALUE plat_is_linux(VALUE self)
 {
   #if defined(__linux__) || defined(linux) || defined(__linux)
