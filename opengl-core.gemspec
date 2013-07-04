@@ -15,6 +15,7 @@ Gem::Specification.new { |s|
   s.extensions << 'ext/opengl-core/extconf.rb'
   s.homepage    = 'https://github.com/nilium/ruby-opengl'
   s.license     = 'Simplified BSD'
+  s.required_ruby_version = '>= 2.0.0'
 
   s.add_development_dependency 'nokogiri'
 }
