@@ -224,33 +224,34 @@ require 'fiddle'
 require 'opengl-core/gl_sym'
 
 module Gl
-EOS
 
-    filtered_commands.each {
-      |name, cmd|
-      io.puts "  # @api private\n  @@#{name}__fnptr__ = nil"
-    }
+#{
+  filtered_commands.map {
+    |name, cmd|
+    # Put a _ on the end of each argument to avoid conflicts with reserved words
+    param_string = cmd.parameters.map { |p| "#{p.name}_" }.join(', ')
 
-    filtered_commands.each {
-      |name, cmd|
-      # Put a _ on the end of each argument to avoid conflicts with reserved words
-      param_string = cmd.parameters.map { |p| "#{p.name}_" }.join(', ')
-      io.puts <<-EOS
+    <<-EOS_INNER
+  GlSym::GL_COMMAND_TYPES[:#{name}] = {
+    :parameter_types => [#{cmd.parameters.map { |p| fiddle_type(p) }.join(', ') }],
+    :return_type     => #{ fiddle_type(cmd.type) }
+  }
 
-  # @api private
+  # @api raw
   def #{name}__(#{param_string})
-    if @@#{name}__fnptr__.nil?
-      sym = GlSym.load_gl_sym__('#{name}')
-      @@#{name}__fnptr__ = Fiddle::Function.new(sym, [#{
-        cmd.parameters.map { |p| fiddle_type(p) }.join(', ') }], #{ fiddle_type(cmd.type) })
+    unless (fn = GlSym.__load_gl_sym__(:#{name}))
+      raise NotImplementedError, "GL function #{name} is not available."
     end
-    @@#{name}__fnptr__.call(#{param_string})
+    fn.call(#{param_string})
   end
-  alias_method :'#{name}', :'#{name}__'
-EOS
-    }
 
-    io.puts "end # module Gl"
+  alias_method :'#{name}', :'#{name}__'
+
+    EOS_INNER
+  }.join('')
+}
+end # module Gl
+EOS
   }
 end
 

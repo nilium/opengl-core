@@ -47,9 +47,10 @@ static VALUE plat_is_linux(VALUE self)
 
 void Init_opengl_stub(void)
 {
-  VALUE module = rb_define_module("GlSym");
-  rb_define_singleton_method(module, "apple?", plat_is_apple, 0);
-  rb_define_singleton_method(module, "windows?", plat_is_windows, 0);
-  rb_define_singleton_method(module, "unix?", plat_is_unix, 0);
-  rb_define_singleton_method(module, "linux?", plat_is_linux, 0);
+  VALUE gl_module = rb_define_module("Gl");
+  VALUE gl_sym_module = rb_define_module_under(gl_module, "GlSym");
+  rb_define_singleton_method(gl_sym_module, "apple?", plat_is_apple, 0);
+  rb_define_singleton_method(gl_sym_module, "windows?", plat_is_windows, 0);
+  rb_define_singleton_method(gl_sym_module, "unix?", plat_is_unix, 0);
+  rb_define_singleton_method(gl_sym_module, "linux?", plat_is_linux, 0);
 }
