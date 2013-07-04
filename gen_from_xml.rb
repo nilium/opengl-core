@@ -82,8 +82,8 @@ TYPE_MAPPINGS = {
 
 SELECT_ENUMS_XPATH    = 'registry/enums/enum[@name and @value and (not(@api) or not(starts-with(@api, "gles")))]'
 SELECT_COMMANDS_XPATH = 'registry/commands/command'
-SELECT_FEATURES_XPATH = 'registry/*[(self::feature or self::extension) and (not(starts-with(@api,"gles")) or not(starts-with(@supported, "gles")))]/require/*[self::command|self::enum]'
-SELECT_REMOVES_XPATH  = 'registry/*[(self::feature or self::extension) and (not(starts-with(@api,"gles")) or not(starts-with(@supported, "gles")))]/remove[@profile="core"]/*[self::command|self::enum]'
+SELECT_FEATURES_XPATH = 'registry/*[(self::feature or self::extension) and (not(starts-with(@api,"gles")) and not(starts-with(@supported, "gles")))]/require/*[self::command|self::enum]'
+SELECT_REMOVES_XPATH  = 'registry/*[(self::feature or self::extension) and (not(starts-with(@api,"gles")) and not(starts-with(@supported, "gles")))]/remove[@profile="core"]/*[self::command|self::enum]'
 SELECT_TYPEDEFS_XPATH = 'registry/types/type[(not(@api) or not(starts-with(@api, "gles"))) and (not(@name) or not(starts-with(@name, "khr")))]'
 SELECT_TYPE_XPATH     = 'ptype/text()|text()'
 
