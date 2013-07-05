@@ -58,7 +58,7 @@ module Gl
     pack_string = type_base[:packed]
     unpack_kind = type_base[:unpack]
 
-    self.module_exec(name, :"#{name}__", pack_string, unpack_kind) {
+    self.module_exec(name, :"#{name}v__", pack_string, unpack_kind) {
       |func_name, raw_name, buffer_elem, pack_as|
       define_method(func_name) {
         |pname|
