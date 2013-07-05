@@ -163,28 +163,28 @@ module Gl
   end
 
   # Returns the version or release number. Calls glGetString.
-  def version()
+  def gl_version()
     glGetString(GL_VERSION)
   end
 
   # Returns the implementation vendor. Calls glGetString.
-  def vendor()
+  def gl_vendor()
     glGetString(GL_VENDOR)
   end
 
   # Returns the renderer. Calls glGetString.
-  def renderer()
+  def gl_renderer()
     glGetString(GL_RENDERER)
   end
 
   # Returns the shading language version. Calls glGetString.
-  def shading_language_version()
+  def gl_shading_language_version()
     glGetString(GL_SHADING_LANGUAGE_VERSION)
   end
 
   # Gets an array of GL extensions. This calls glGetIntegerv and glGetStringi,
   # so be aware that you should probably cache the results.
-  def extensions()
+  def gl_extensions()
     (0 ... glGetInteger(GL_NUM_EXTENSIONS)).map { |index| glGetStringi(GL_EXTENSIONS, index) }
   end
 
