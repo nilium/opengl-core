@@ -82,8 +82,6 @@ TYPE_MAPPINGS = {
 
 SELECT_ENUMS_XPATH    = 'registry/enums/enum[@name and @value and (not(@api) or not(starts-with(@api, "gles")))]'
 SELECT_COMMANDS_XPATH = 'registry/commands/command'
-SELECT_FEATURES_XPATH = 'registry/*[(self::feature or self::extension) and (not(starts-with(@api,"gles")) and not(starts-with(@supported, "gles")))]/require/*[self::command|self::enum]'
-SELECT_REMOVES_XPATH  = 'registry/*[(self::feature or self::extension) and (not(starts-with(@api,"gles")) and not(starts-with(@supported, "gles")))]/remove[@profile="core"]/*[self::command|self::enum]'
 SELECT_TYPEDEFS_XPATH = 'registry/types/type[(not(@api) or not(starts-with(@api, "gles"))) and (not(@name) or not(starts-with(@name, "khr")))]'
 SELECT_TYPE_XPATH     = 'ptype/text()|text()'
 
@@ -147,39 +145,42 @@ def generate_binding_impl(document)
     gl_commands = get_commands(document)
     gl_enums = get_enums(document)
 
-    document.xpath(SELECT_FEATURES_XPATH).each {
-      |feature|
+    pull_feature = proc { |feature|
       feature_name = feature['name']
       feature_kind = feature.name
+
       case feature_kind
-      when 'enum'
-        filtered_enums[feature_name] = gl_enums[feature_name]
-
-      when 'command'
-        filtered_commands[feature_name] = gl_commands[feature_name]
-
-      else
-        Raise "Unrecognized feature kind"
+      when 'enum' then filtered_enums[feature_name] = gl_enums[feature_name]
+      when 'command' then filtered_commands[feature_name] = gl_commands[feature_name]
+      else raise "Unrecognized feature kind"
       end
     }
 
-    if GEN_GL3_AND_UP
-      document.xpath(SELECT_REMOVES_XPATH).each {
-        |feature|
-        feature_name = feature['name']
-        feature_kind = feature.name
-        case feature_kind
-        when 'enum'
-          filtered_enums.delete feature_name
+    drop_feature = proc { |feature|
+      feature_name = feature['name']
+      feature_kind = feature.name
 
-        when 'command'
-          filtered_commands.delete feature_name
+      case feature_kind
+      when 'enum' then filtered_enums.delete(feature_name)
+      when 'command' then filtered_commands.delete(feature_name)
+      else raise "Unrecognized feature kind"
+      end
+    }
 
-        else
-          Raise "Unrecognized feature kind"
-        end
-      }
-    end
+    extensions = document.xpath("registry/extensions/extension")
+    core_exts = extensions.select { |ext| ext['supported'] =~ /\bglcore\b/ }
+    core_exts.each { |ext|
+      ext.xpath('extension/require/*[(self::command|self::enum)]').each(&pull_feature)
+    }
+
+    features = document.xpath('registry/feature')
+    gl_features = features.select { |feature| feature['api'] =~ /\bgl\b/ }
+    gl_features.each { |feature|
+      feature.xpath('require/*[(self::command|self::enum)]').each(&pull_feature)
+      if GEN_GL3_AND_UP
+        feature.xpath('remove[@profile="core"]/*[(self::command|self::enum)]').each(&drop_feature)
+      end
+    }
   end
 
   enum_name_length  = filtered_enums.map { |k, enum| enum.name.length }.max
