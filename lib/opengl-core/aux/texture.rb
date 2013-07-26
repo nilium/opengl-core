@@ -32,7 +32,7 @@ class Gl::Texture < Gl::GlInternalMarked
     self
   end
 
-  def unbind(target)
+  def unbind(target = nil)
     self.class.unbind(target || @target)
     self
   end
