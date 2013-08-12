@@ -11,8 +11,9 @@ class Gl::Program < Gl::GlInternalMarked
   def initialize(name = nil)
     super()
     @name = (name != 0 && name) || Gl.glCreateProgram()
-    @validate_status = nil
-    @link_status = nil
+
+    @validate_status   = nil
+    @link_status       = nil
     @uniform_locations = {}
     __mark__
   end
@@ -85,18 +86,24 @@ class Gl::Program < Gl::GlInternalMarked
   end
 
   def hint_uniform(uniform_name)
-    @uniform_locations[uniform_name.to_sym] =
-      (@uniform_locations[uniform_name.to_sym] || -1)
+    uniform_name = uniform_name.to_sym
+    @uniform_locations[uniform_name] ||= -1
     self
   end
 
+  # Implicitly hints that a uniform exists.
   def uniform_location(uniform_name)
     uniform_sym = uniform_name.to_sym
-    @uniform_locations[uniform_sym] ||
-      (@uniform_locations[uniform_sym] =
-        Gl.glGetUniformLocation(@name, uniform_name.to_s))
+    @uniform_locations[uniform_sym] ||=
+      Gl.glGetUniformLocation(@name, uniform_name.to_s)
   end
   alias_method :[], :uniform_location
+
+  def each_hinted_uniform(&block)
+    return @uniform_locations.each_key unless block_given?
+    @uniform_locations.each_key(&block)
+    self
+  end
 
   def subroutine_uniform_location(shader_kind, uniform_name)
     Gl.glGetSubroutineUniformLocation(@name, shader_kind, uniform_name)
