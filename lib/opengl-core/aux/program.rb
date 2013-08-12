@@ -7,7 +7,6 @@ class Gl::Shader ; end
 class Gl::Program < Gl::GlInternalMarked
 
   attr_reader :name
-  attr_reader :kind
 
   def initialize(name = nil)
     super()
