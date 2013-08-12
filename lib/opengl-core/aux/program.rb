@@ -41,7 +41,7 @@ class Gl::Program < Gl::GlInternalMarked
   def __reload_uniforms__
     @uniform_locations.keys.each {
       |key|
-      @uniform_locations[key] = uniform_location(key)
+      @uniform_locations[key] = Gl.glGetUniformLocation(@name, key.to_s)
     }
   end
 
