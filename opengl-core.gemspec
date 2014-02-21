@@ -9,7 +9,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'opengl-core'
-  s.version     = '2.0.0'
+  s.version     = '2.0.1'
   s.summary     = 'OpenGL core profile bindings'
   s.description = 'OpenGL core profile (3.2 onward, no deprecated functionality) bindings for Ruby 2.x. Generated from Khronos XML spec files.'
   s.authors     = [ 'Noel Raymond Cower' ]
