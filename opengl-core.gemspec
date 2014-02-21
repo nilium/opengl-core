@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files       = Dir.glob('lib/**/*.rb') + ['README.md', 'COPYING']
   s.homepage    = 'https://github.com/nilium/ruby-opengl'
   s.license     = 'Simplified BSD'
-  s.required_ruby_version = '~> 2'
+  s.required_ruby_version = '~> 2.0'
 
   s.add_development_dependency 'nokogiri', '~> 1.6'
 end
