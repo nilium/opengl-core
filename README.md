@@ -77,7 +77,7 @@ The OpenGL bindings are licensed under a simplified BSD license. This is to
 keep things simple for the both of us, but if you need it simpler, just contact
 me and we'll work something out.
 
-    Copyright (c) 2013, Noel Raymond Cower <ncower@gmail.com>.
+    Copyright (c) 2013 - 2014, opengl-core project contributors.
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
