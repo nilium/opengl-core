@@ -38,12 +38,24 @@ Once the functions have been generated, you can proceed to build and install
 the gem as per usual:
 
     $ gem build opengl-core.gemspec
-    $ gem install opengl-core-1.0.0.gem
+    $ gem install opengl-core-_._._.gem
 
 Afterward, all GL enums and commands will be under the `Gl` module (note the
 lowercase L). Just `require 'opengl-core'` and you should be on your way. You
 don't have to statically link to the GL libraries, they will be loaded at
 runtime on first use.
+
+
+Simplified Bindings
+-------------------
+
+In an effort to make working with OpenGL simpler in Ruby, an additional project,
+[opengl-aux], was started using aux classes/functions previously included in
+opengl-core. opengl-aux provides Ruby-friendlier (still not necessarily
+friendliest) classes and functions to help people uncomfortable working with
+raw OpenGL bindings.
+
+[opengl-aux]: https://github.com/nilium/opengl-aux
 
 
 Notes
@@ -62,12 +74,23 @@ raw function. So, in the module, you have both `glClear` and `glClear__`, the
 latter being the raw function and the former being a wrapper around it that
 can be overridden.
 
-I'd like to get some of these functions simplified down the road through an
-optional module that can be loaded to override the functions, so the plan is to
-slowly write friendlier functions that call into the raw functions. If you'd
-like to contribute to this effort, please do so. Just push your changes to
-GitHub and submit a pull request, or send me a patch with a cogent description
-of the changes. Yes, I used the word "cogent."
+
+Contributing
+------------
+
+Have a patch to contribute? Just submit a pull request on [GitHub] and describe
+the contents of the patch as clearly as possible. Any contributions must be
+licensed under the same license as the rest of opengl-core.
+
+[GitHub]: https://github.com/nilium/ruby-opengl
+
+
+Contributors
+------------
+
+Contributors listed in no particular order:
+
+- [Noel Cower](https://github.com/nilium)
 
 
 License
