@@ -16,6 +16,6 @@ tmp
 .yardoc
 _yardoc
 doc/
-lib/opengl-core/gl_enums.rb
-lib/opengl-core/gl_commands.rb
+lib/opengl-core/gl[_,-]enums.rb
+lib/opengl-core/gl[_,-]commands.rb
 gl.xml
