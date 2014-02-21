@@ -94,6 +94,12 @@ class FiddleSymbolLoader
   # returned if load_sym is called for the same name again.
   def load_sym(name, types)
     if @opengl_lib.nil?
+      # Platform detection based on code by Thomas Enebo, written for this
+      # Stack Overflow answer: http://stackoverflow.com/a/13586108/457812. As
+      # such, this particular bit of code is also available under the same
+      # terms as content on Stack Overflow unless there's some licensing issue
+      # I'm unaware of, in which case I assume it'll eventually be brought to
+      # my attention so I can fix things up.
       host = RbConfig::CONFIG['host_os']
       lib_path =
         case host
