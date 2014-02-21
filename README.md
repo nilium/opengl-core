@@ -85,12 +85,15 @@ licensed under the same license as the rest of opengl-core.
 [GitHub]: https://github.com/nilium/ruby-opengl
 
 
-Contributors
+Acknowledgmenets
 ------------
 
-Contributors listed in no particular order:
+opengl-core has received contributions and other help from the following people:
 
 - [Noel Cower](https://github.com/nilium)
+- [Nogbit](https://github.com/Nogbit)
+- [Justin Scott](https://github.com/JScott)
+- [John Woods](https://github.com/mohawkjohn)
 
 
 License
