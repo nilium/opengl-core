@@ -1,7 +1,0 @@
-require 'opengl-core'
-require 'opengl-core/aux/gl'
-require 'opengl-core/aux/vertex_array'
-require 'opengl-core/aux/buffer'
-require 'opengl-core/aux/texture'
-require 'opengl-core/aux/shader'
-require 'opengl-core/aux/program'
