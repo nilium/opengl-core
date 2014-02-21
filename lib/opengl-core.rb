@@ -1,9 +1,19 @@
-require 'opengl-core/opengl_stub'
-require 'opengl-core/gl_sym'
-require 'opengl-core/gl_enums'
-require 'opengl-core/gl_commands'
+#  This file is part of the opengl-core project.
+#  <https://github.com/nilium/ruby-opengl>
+#
+#  -----------------------------------------------------------------------------
+#
+#  opengl-core.rb
+#    Root file for opengl-core -- contains general functions and requires other
+#    gem sources.
 
-module Gl
+
+require 'opengl-core/gl-sym'
+require 'opengl-core/gl-enums'
+require 'opengl-core/gl-commands'
+
+
+module GL
 
   # Checks if a GL command is availalbe to use. This necessarily loads the
   # command if it's not yet loaded just to check if it exists, so do not call
@@ -11,7 +21,7 @@ module Gl
   # want to ensure this only reads, you can call load_all_gl_commands! ahead of
   # time and query it afterward.
   def have_gl_command?(command)
-    !!GlSym.__load_gl_sym__(command.intern)
+    begin ; !!GLSym.load_sym(command.intern) ; rescue NoMethodError ; end
   end
 
   # Does what it says on the tin. Should only be called once, preferably from
@@ -19,10 +29,12 @@ module Gl
   # loading. If you're using Gl commands from multiple threads with multiple
   # contexts, you should call this before using any Gl commands.
   def load_all_gl_commands!()
-    GlSym::GL_COMMAND_TYPES.each_key { |fnsym| GlSym.__load_gl_sym__(fnsym) }
+    GLSym::GL_COMMAND_TYPES.each_key do |fnsym|
+      begin ; GLSym.load_sym(fnsym) ; rescue NoMethodError ; end
+    end
     self
   end
 
   extend self
 
-end
+end # GL
