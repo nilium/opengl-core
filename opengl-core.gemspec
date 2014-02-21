@@ -1,21 +1,23 @@
-# This file is part of ruby-opengl.
-# Copyright (c) 2013 Noel Raymond Cower. All rights reserved.
-# See COPYING for license details.
+#  This file is part of the opengl-core project.
+#  <https://github.com/nilium/ruby-opengl>
+#
+#  -----------------------------------------------------------------------------
+#
+#  opengl-core.gemspec
+#    opengl-core Gem specification.
 
-Gem::Specification.new { |s|
+
+Gem::Specification.new do |s|
   s.name        = 'opengl-core'
-  s.version     = '1.3.2'
-  s.date        = '2013-08-12'
+  s.version     = '2.0.0'
   s.summary     = 'OpenGL core profile bindings'
   s.description = 'OpenGL core profile (3.2 onward, no deprecated functionality) bindings for Ruby 2.x. Generated from Khronos XML spec files.'
   s.authors     = [ 'Noel Raymond Cower' ]
   s.email       = 'ncower@gmail.com'
-  s.files       = Dir.glob('lib/**/*.rb') +
-                  Dir.glob('ext/**/*.{c,rb}')
-  s.extensions << 'ext/opengl-core/extconf.rb'
+  s.files       = Dir.glob('lib/**/*.rb') + ['README.md', 'COPYING']
   s.homepage    = 'https://github.com/nilium/ruby-opengl'
   s.license     = 'Simplified BSD'
-  s.required_ruby_version = '>= 2.0.0'
+  s.required_ruby_version = '~> 2'
 
-  s.add_development_dependency 'nokogiri'
-}
+  s.add_development_dependency 'nokogiri', '~> 1.6'
+end
