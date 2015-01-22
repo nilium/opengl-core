@@ -85,8 +85,8 @@ licensed under the same license as the rest of opengl-core.
 [GitHub]: https://github.com/nilium/ruby-opengl
 
 
-Acknowledgmenets
-------------
+Acknowledgments
+---------------
 
 opengl-core has received contributions and other help from the following people:
 
@@ -95,6 +95,8 @@ opengl-core has received contributions and other help from the following people:
 - [Justin Scott](https://github.com/JScott)
 - [John Woods](https://github.com/mohawkjohn)
 
+For a complete overview of each contribution, you can clone the repository and
+use `git shortlog`.
 
 License
 -------
